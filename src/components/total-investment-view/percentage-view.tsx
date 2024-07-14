@@ -38,7 +38,7 @@ interface ChartData {
   id: string
 }
 
-const Chart = () => {
+const PercentageView = () => {
   const [chartData, setChartData] = useState<ChartData[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -69,8 +69,8 @@ const Chart = () => {
 
     datasets: [
       {
-        label: 'Total Amount',
-        data: chartData.map(item => item.totalvalue),
+        label: 'Net percentage',
+        data: chartData.map(item => item.totalreturnpercentage),
         backgroundColor: 'rgba(75,192,192,0.2)',
         borderColor: 'rgba(75,192,192,1)',
         fill: true, // This property fills the area under the line
@@ -86,7 +86,7 @@ const Chart = () => {
       },
       title: {
         display: true,
-        text: 'Networth over time',
+        text: 'Networth over time  (In crores)',
       },
       tooltip: {
         callbacks: {
@@ -120,7 +120,7 @@ const Chart = () => {
       y: {
         title: {
           display: true,
-          text: 'Total Amount (In crores)'
+          text: 'Net percentage'
         }
       }
     }
@@ -137,4 +137,4 @@ const Chart = () => {
   );
 };
 
-export default Chart;
+export default PercentageView;

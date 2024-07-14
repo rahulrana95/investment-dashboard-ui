@@ -5,6 +5,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { format } from 'date-fns';
+import PercentageView from '../../components/total-investment-view/percentage-view';
 
   const getStartDate = (amount: number, unit: 'day' | 'week' | 'month' | 'year'): Date => {
     const today = new Date();
@@ -122,6 +123,7 @@ const Home = () => {
     <div>
         <DateRangePicker/>
       <Chart/>
+      <PercentageView/>
     </div>
   );
 };
