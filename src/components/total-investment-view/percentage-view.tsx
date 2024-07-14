@@ -43,7 +43,7 @@ const PercentageView = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('api/v1/getTotalInvestments')
+    fetch('https://investment-dashboard-egx8.onrender.com/api/v1/getTotalInvestments')
       .then(response => response.json())
       .then(data => {
         setChartData(data.totalInvestments.map((item: any) => {

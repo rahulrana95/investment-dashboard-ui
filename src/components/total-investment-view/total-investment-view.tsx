@@ -43,7 +43,7 @@ const Chart = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('api/v1/getTotalInvestments')
+    fetch('/api/v1/getTotalInvestments')
       .then(response => response.json())
       .then(data => {
         setChartData(data.totalInvestments.map((item: any) => {

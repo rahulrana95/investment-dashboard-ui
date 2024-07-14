@@ -28,7 +28,7 @@
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "https://investment-dashboard-egx8.onrender.com",
+  "proxy": "http://localhost:4001",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
