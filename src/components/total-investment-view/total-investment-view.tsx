@@ -64,7 +64,7 @@ const Chart = () => {
   }, []);
 
   const data = {
-    labels: chartData.map(item => format(parseISO(item.date), 'dd/MMM/yyyy')), //Use parseISO to parse ISO formatted dates
+    labels: chartData.map(item => format(item.date, 'dd/MMM/yyyy')), //Use parseISO to parse ISO formatted dates
 
 
     datasets: [
