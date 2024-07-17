@@ -30,38 +30,57 @@ function convertValue(value: string) {
   }
 }
 
-interface ChartData {
-  date: string;
-  totalreturns: number;
-  totalvalue: number;
-  totalreturnpercentage: number;
-  id: string
+interface InvestmentData {
+    date: Date;
+    value: number;
 }
 
-const PercentageView = () => {
-  const [chartData, setChartData] = useState<ChartData[]>([]);
-  const [loading, setLoading] = useState(true);
+function calculateInvestmentOver25Years(startDate: Date, initialValue: number, annualRate: number, monthlyContribution: number): InvestmentData[] {
+    const data: InvestmentData[] = [];
+    const monthlyRate = annualRate / 12 / 100;
+    const daysIn15Days = 15;
+    const totalDays = 25 * 365; // Approximately, not accounting for leap years
+    
+    let currentValue = initialValue;
+    let currentDate = new Date(startDate);
 
-  useEffect(() => {
-    fetch('/api/v1/getTotalInvestments')
-      .then(response => response.json())
-      .then(data => {
-        setChartData(data.totalInvestments.map((item: any) => {
-            return {
-                date: item.date,
-                totalreturns: (item.totalreturns),
-                totalvalue: (item.totalvalue),
-                totalreturnpercentage: item.totalreturnpercentage,
-                id: item.id
-            };
-        }));
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
-  }, []);
+    for (let day = 0; day <= totalDays; day += daysIn15Days) {
+        // Update date
+        currentDate.setDate(currentDate.getDate() + daysIn15Days);
+        
+        // Add monthly contribution at the start of each month
+        if (currentDate.getDate() === 1) {
+            currentValue += monthlyContribution;
+        }
+
+        // Apply compound interest
+        currentValue *= Math.pow(1 + monthlyRate, daysIn15Days / 30);
+
+        // Store the result for each 15-day period
+        data.push({
+            date: new Date(currentDate),
+            value: currentValue
+        });
+    }
+
+    return data;
+}
+
+// Usage example
+const startDate = new Date('2024-07-01');
+const initialValue = 1.10e7; // 1.10 crore in lakhs
+const annualRate = 25; // 25%
+const monthlyContribution = 2e5; // 2 lakhs
+
+const investmentData = calculateInvestmentOver25Years(startDate, initialValue, annualRate, monthlyContribution);
+
+
+const croreBase = 10000000;
+
+const PredictionView = () => {
+  const [chartData, setChartData] = useState<InvestmentData[]>(investmentData);
+  const [loading, setLoading] = useState(false);
+
 
   const data = {
     labels: chartData.map(item => format(item.date, 'dd/MMM/yyyy')), //Use parseISO to parse ISO formatted dates
@@ -69,8 +88,8 @@ const PercentageView = () => {
 
     datasets: [
       {
-        label: 'Net percentage',
-        data: chartData.map(item => item.totalreturnpercentage),
+        label: 'Net value',
+        data: chartData.map(item => item.value/croreBase),
         backgroundColor: 'rgba(75,192,192,0.2)',
         borderColor: 'rgba(75,192,192,1)',
         fill: true, // This property fills the area under the line
@@ -86,7 +105,7 @@ const PercentageView = () => {
       },
       title: {
         display: true,
-        text: 'Networth over time  (In crores)',
+        text: 'Predicted Networth over time  (In crores)',
       },
       tooltip: {
         callbacks: {
@@ -94,9 +113,7 @@ const PercentageView = () => {
             const index = context.dataIndex;
             const dataItem = chartData[index];
             return [
-              `Total Amount: ${dataItem.totalvalue} Crores`,
-              `Net PL Amount: ${Math.round((dataItem.totalreturns + Number.EPSILON) * 100) / 100} Crores`,
-              `Net PL Percentage: ${dataItem.totalreturnpercentage}`,
+              `Total Amount: ${dataItem.value/croreBase} Crores`,
             ];
           }
         }
@@ -120,7 +137,7 @@ const PercentageView = () => {
       y: {
         title: {
           display: true,
-          text: 'Net percentage'
+          text: 'Net value'
         }
       }
     }
@@ -137,4 +154,4 @@ const PercentageView = () => {
   );
 };
 
-export default PercentageView;
+export default PredictionView;

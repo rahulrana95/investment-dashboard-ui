@@ -7,12 +7,22 @@ import Home from './pages/home/home';
 import About from './pages/about/about';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
+import LoginModal from './components/login-modal/login-modal';
 
 
 function App() {
-    const [backendStatus, setBackendStatus] = useState<'loading' | 'online' | 'offline'>('loading');
+  const [backendStatus, setBackendStatus] = useState<'loading' | 'online' | 'offline'>('loading');
+  const [isLoginOpen, setLoginOpen] = useState(false);
 
-    useEffect(() => {
+  const handleLoginOpen = () => {
+    setLoginOpen(true);
+  };
+
+  const handleLoginClose = () => {
+    setLoginOpen(false);
+  };
+
+  useEffect(() => {
     fetch('/api/v1/')
       .then(response => {
         if (response.ok) {
@@ -22,6 +32,11 @@ function App() {
         }
       })
       .catch(() => setBackendStatus('offline'));
+    fetch('/auth/verify-token')
+      .then(response => {
+        console.log(response)
+      })
+      .catch(() => console.log('error verifcation'));
   }, []);
 
   const renderBackendStatusIcon = () => {
@@ -41,7 +56,10 @@ function App() {
           <Typography variant="h6" style={{ flexGrow: 1 }}>My App  {renderBackendStatusIcon()}</Typography>
           <Button color="inherit" component={Link} to="/">Home</Button>
           <Button color="inherit" component={Link} to="/about">About</Button>
-         
+          <Button color="inherit" onClick={handleLoginOpen}>
+            Login/Signup
+          </Button>
+          <LoginModal open={isLoginOpen} handleClose={handleLoginClose} />
         </Toolbar>
       </AppBar>
       <Container>
