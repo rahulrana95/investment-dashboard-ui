@@ -8,6 +8,7 @@ import About from './pages/about/about';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import LoginModal from './components/login-modal/login-modal';
+import { config } from './config';
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch('/api/v1/')
+    fetch(`${config.baseURL}/api/v1/`)
       .then(response => {
         if (response.ok) {
           setBackendStatus('online');

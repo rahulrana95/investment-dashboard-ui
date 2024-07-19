@@ -6,6 +6,7 @@ import './total-investment-view.css';
 import { Box, Typography, useTheme, Grid } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { config } from '../../config';
 
 ChartJS.register(
   CategoryScale,
@@ -34,13 +35,12 @@ function convertValue(value: string) {
   }
 }
 
-// @ts-expect-error
-const PredictedActualComparison = ({ predictedValue, actualValue }) => {
+const PredictedActualComparison = ({ predictedValue, actualValue }: { predictedValue: number, actualValue: number }) => {
   const theme = useTheme();
   const croreBase = 10000000; // Base value for crores
 
   const predictedValueInCrores = parseFloat(((predictedValue || 0) / croreBase).toFixed(3));
-  const actualValueInCrores = parseFloat(actualValue.toFixed(3));
+  const actualValueInCrores = parseFloat(actualValue?.toFixed(3));
 
   const isActualGreater = actualValueInCrores > predictedValueInCrores;
 
@@ -168,7 +168,13 @@ const Chart = () => {
   const [externalData, setExternalData] = useState<InvestmentData[]>(investmentData);
 
   useEffect(() => {
-    fetch('/api/v1/getTotalInvestments')
+    fetch(`${config.baseURL}/api/v1/getTotalInvestments`, {
+      method: 'GET',
+      credentials: 'include', // Ensure this is included
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
       .then(response => response.json())
       .then(data => {
         setChartData(data.totalInvestments.map((item: any) => {
@@ -268,7 +274,7 @@ const Chart = () => {
   console.log(data.datasets)
   return (
     <div>
-      <PredictedActualComparison predictedValue={getTodayValue()?.value} actualValue={data.datasets[0].data[data.datasets[0].data.length - 1]} />
+      <PredictedActualComparison predictedValue={getTodayValue()?.value || 0} actualValue={data.datasets[0].data[data.datasets[0].data.length - 1]} />
       <Line data={data} options={options} />
     </div>
   );
