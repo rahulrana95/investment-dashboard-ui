@@ -65,7 +65,7 @@ function App() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: "#2A2D34" }}>
         <Toolbar>
           <Typography variant="h6" style={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>JS Warriors  {renderBackendStatusIcon()}</Typography>
           <Button color="inherit" component={Link} to="/">Home</Button>
@@ -84,4 +84,29 @@ function App() {
   );
 }
 
+// Gunmetal(#2A2D34)
+
+// Certainly! Here’s how you can use different shades and colors effectively for various elements on your website:
+
+// 1. Heading Text:
+// Color: White(#FFFFFF) or Silver(#C0C0C0)
+// Reason: Headings should stand out against the Gunmetal background, so white or a light metallic gray provides high contrast and draws attention.
+// 2. Paragraph Text:
+// Color: Light Gray(#D3D3D3) or Slate Gray(#708090)
+// Reason: These colors offer good readability while being softer than the heading color.They are easier on the eyes for longer reading.
+// 3. Points or Subheadings:
+// Color: Charcoal(#2C2F36) or Dark Slate(#23272B)
+// Reason: These shades are slightly lighter or darker than the Gunmetal background, making them ideal for highlighting points or subheadings without too much contrast.
+// 4. Button Text:
+// Color: White(#FFFFFF) or Electric Blue(#007BFF)
+// Reason: For call - to - action buttons, white text provides a clean look, while Electric Blue adds a vibrant touch to make the buttons stand out.
+// 5. Button Background:
+// Color: Teal(#008080) or Emerald Green(#50C878)
+// Reason: These colors offer a striking contrast with white text and complement the Gunmetal background.They are also eye - catching for user actions.
+// 6. Links:
+//   Color: Electric Blue(#007BFF) or Copper(#B87333)
+// Reason: These colors are vibrant and stand out against the Gunmetal background, making links easily noticeable and inviting to click.
+// 7. Accent Elements(e.g., Icons, Borders):
+// Color: Steel Gray(#2E3238) or Platinum(#E5E5E5)
+// Reason: These colors can add subtle accents without overwhelming the main color scheme, ensuring they enhance rather than distract from the design.
 export default App;

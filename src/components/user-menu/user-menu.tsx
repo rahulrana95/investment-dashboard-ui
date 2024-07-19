@@ -26,7 +26,7 @@ export default function AvatarMenu({ handleLoginOpen }: { handleLoginOpen: () =>
             {email ?
                 <Button onClick={handleClick}><Chip color="primary" avatar={<Avatar>{avatar}</Avatar>} label={emailPrefix} /></Button>
                 :
-                <Button variant="outlined">Login</Button>}
+                <Button variant="outlined" onClick={handleLoginOpen}>Login</Button>}
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
