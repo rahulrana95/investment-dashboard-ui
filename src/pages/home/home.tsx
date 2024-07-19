@@ -7,28 +7,30 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { format } from 'date-fns';
 import PercentageView from '../../components/total-investment-view/percentage-view';
 import PredictionView from '../../components/total-investment-view/prediction';
+import CategoryComponentHeader from '../../components/categories-header/category-header';
+import './home.css';
 
-  const getStartDate = (amount: number, unit: 'day' | 'week' | 'month' | 'year'): Date => {
-    const today = new Date();
-    const pastDate = new Date(today);
-    switch (unit) {
-      case 'day':
-        pastDate.setDate(today.getDate() + amount);
-        break;
-      case 'week':
-        pastDate.setDate(today.getDate() + amount * 7);
-        break;
-      case 'month':
-        pastDate.setMonth(today.getMonth() + amount);
-        break;
-      case 'year':
-        pastDate.setFullYear(today.getFullYear() + amount);
-        break;
-      default:
-        break;
-    }
-    return pastDate;
-  };
+const getStartDate = (amount: number, unit: 'day' | 'week' | 'month' | 'year'): Date => {
+  const today = new Date();
+  const pastDate = new Date(today);
+  switch (unit) {
+    case 'day':
+      pastDate.setDate(today.getDate() + amount);
+      break;
+    case 'week':
+      pastDate.setDate(today.getDate() + amount * 7);
+      break;
+    case 'month':
+      pastDate.setMonth(today.getMonth() + amount);
+      break;
+    case 'year':
+      pastDate.setFullYear(today.getFullYear() + amount);
+      break;
+    default:
+      break;
+  }
+  return pastDate;
+};
 
 const DateRangePicker = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -121,11 +123,8 @@ const DateRangePicker = () => {
 
 const Home = () => {
   return (
-    <div>
-        <DateRangePicker/>
-      <Chart/>
-      <PercentageView/>
-      <PredictionView/>
+    <div className='home page-content-area'>
+      <CategoryComponentHeader />
     </div>
   );
 };

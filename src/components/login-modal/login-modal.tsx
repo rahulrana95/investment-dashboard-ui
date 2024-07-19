@@ -11,6 +11,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { default as axios } from 'axios';
 import { config } from '../../config';
+import useLoginStore from './useLoginStore';
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -33,6 +34,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const loginStore = useLoginStore();
 
     const handleLogin = async () => {
         try {

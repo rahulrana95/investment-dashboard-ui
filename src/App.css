@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+/* Globalcss*/
+.page-content-area {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
