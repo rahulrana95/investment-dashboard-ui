@@ -11,6 +11,8 @@ import LoginModal from './components/login-modal/login-modal';
 import { config } from './config';
 import useLoginStore from './components/login-modal/useLoginStore';
 import AvatarMenu from './components/user-menu/user-menu';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
 interface VerifyTokenResponse {
@@ -31,6 +33,9 @@ function App() {
   };
 
   useEffect(() => {
+    const token = Cookies.get('token');
+    axios.defaults.headers.common['token'] = `${token}`;
+
     fetch(`${config.baseURL}/api/v1/`)
       .then(response => {
         if (response.ok) {
@@ -41,7 +46,12 @@ function App() {
       })
       .catch(() => setBackendStatus('offline'));
     fetch(`${config.baseURL}/auth/verify-token`, {
-      credentials: 'include'
+      credentials: 'include',
+      method: 'GET', // or 'POST', 'PUT', etc.
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      },
     }).then((response) => response.json())
       .then((response: VerifyTokenResponse) => {
         if (response.email) {

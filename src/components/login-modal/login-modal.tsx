@@ -46,7 +46,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             axios.defaults.headers.common['token'] = `${token}`;
             // Optionally store the token in a cookie
-            Cookies.set('token', token, { expires: 7, secure: true, sameSite: 'Strict' });
+            Cookies.set('token', token, { expires: 7, secure: false, sameSite: 'None' });
+            console.log(Cookies.get('token'));
             console.log('Login successful:', response.data);
             handleClose();
         } catch (error) {
