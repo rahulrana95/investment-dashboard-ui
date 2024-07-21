@@ -12,6 +12,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { default as axios } from 'axios';
 import { config } from '../../config';
 import useLoginStore from './useLoginStore';
+import Cookies from 'js-cookie';
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -43,6 +44,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
             });
             const { token } = response.data;
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.defaults.headers.common['token'] = `${token}`;
+            // Optionally store the token in a cookie
+            Cookies.set('token', token, { expires: 7, secure: true, sameSite: 'Strict' });
             console.log('Login successful:', response.data);
             handleClose();
         } catch (error) {
