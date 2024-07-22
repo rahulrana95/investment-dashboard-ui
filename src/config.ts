@@ -11,7 +11,7 @@ const modeValues: { [key in Mode]: Mode } = {
 
 const mode: Mode = process.env.REACT_APP_MODE as Mode || modeValues.PRODUCTION;
 
-let baseURL: string = 'https://investment-dashboard-egx8.onrender.com';
+let baseURL: string = 'https://api-v2.jswarrior.com';
 
 if (mode === modeValues.DEVELOPMENT) {
     baseURL = 'http://localhost:4001';
