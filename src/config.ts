@@ -26,7 +26,7 @@ const config: {
 } = {
     mode,
     baseURL,
-    GA_TRACKING_ID: process.env.GA_TRACKING_ID || ""
+    GA_TRACKING_ID: process.env.REACT_APP_GA_TRACKING_ID || ""
 };
 
 
