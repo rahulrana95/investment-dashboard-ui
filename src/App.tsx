@@ -13,6 +13,8 @@ import useLoginStore from './components/login-modal/useLoginStore';
 import AvatarMenu from './components/user-menu/user-menu';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import ReactGA from 'react-ga4';
+ReactGA.initialize(config.GA_TRACKING_ID);
 
 
 interface VerifyTokenResponse {
@@ -59,6 +61,12 @@ function App() {
         }
       })
       .catch(() => console.log('error verifcation'));
+
+    ReactGA.send({
+      hitType: 'pageview',
+      page: "/",
+      title: 'Root App'
+    })
   }, []);
 
   const renderBackendStatusIcon = () => {

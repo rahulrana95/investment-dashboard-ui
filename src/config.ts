@@ -22,10 +22,12 @@ if (mode === modeValues.DEVELOPMENT) {
 const config: {
     mode: Mode
     baseURL: string
+    GA_TRACKING_ID: string
 } = {
     mode,
-    baseURL
+    baseURL,
+    GA_TRACKING_ID: process.env.GA_TRACKING_ID || ""
 };
 
 
-export {config};
+export { config };
